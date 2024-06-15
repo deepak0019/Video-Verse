@@ -26,16 +26,34 @@ const userSchema = new Schema(
       index: true,
     },
     avatar: {
-      type: String, // cloudinary url
-      required: true,
+      publicId: {
+        type: String,
+        required: true,
+      },
+      url: {
+        type: String, //cloudinary url
+        required: true,
+      },
     },
     coverImage: {
-      type: String, // cloudinary url
+      publicId: {
+        type: String,
+        required: true,
+      },
+      url: {
+        type: String, //cloudinary url
+      }, // cloudinary url
     },
     watchHistory: [
       {
         type: Schema.Types.ObjectId,
         ref: "Video",
+      },
+      {
+        watchedAt: {
+          type: Date,
+          default: Date.now,
+        },
       },
     ],
     password: {
@@ -88,7 +106,5 @@ userSchema.methods.generateRefreshToken = function () {
     }
   );
 };
-
-
 
 export const User = mongoose.model("User", userSchema);
